@@ -53,7 +53,7 @@ public class RkList extends Activity {
 
             }
         });
-        //new RkDetial().execute(new Object());
+        //new RkDetail().execute(new Object());
 
         RkListItem rkListItem = new RkListItem();
         rkListItem.setId(0);
@@ -93,7 +93,7 @@ public class RkList extends Activity {
         return details;
     }
 
-    class RkDetial extends AsyncTask<Object, Void, String> {
+    class RkDetail extends AsyncTask<Object, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(RkList.this, "",

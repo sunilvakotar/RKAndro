@@ -28,7 +28,8 @@
     <RelativeLayout  android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:layout_centerInParent="true"
-                    android:id="@+id/popupWithCross">
+                    android:id="@+id/popupWithCross"
+                    android:visibility="gone">
         <com.google.ads.AdView android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
                                android:id="@+id/adviewpopup"
