@@ -1,0 +1,4 @@
+RKAndro
+=======
+
+Informative Android application
