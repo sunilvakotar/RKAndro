@@ -3,6 +3,10 @@ package com.ruby.rkandro;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.Window;
 import com.ruby.rkandro.pojo.RkListItem;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,38 +38,70 @@ public class RkList extends Activity {
     private List<RkListItem> RkList = new ArrayList<RkListItem>();
     RkListAdapter rkListAdapter;
 
+    ConnectionDetector cd;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_rk_list);
 
-        lv = (ListView) findViewById(R.id.lviRkList);
-        lv.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+        // creating connection detector class instance
+        cd = new ConnectionDetector(getApplicationContext());
+        // get Internet status
+        boolean isInternetPresent = cd.isConnectingToInternet();
 
-                RkListItem rkDetail = (RkListItem) parent.getItemAtPosition(position);
-                Intent i = new Intent(RkList.this, RkListDetail.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("description", rkDetail.getDescription());
-                i.putExtras(bundle);
-                startActivity(i);
+        if (isInternetPresent) {
+            // Internet Connection is Present
+            lv = (ListView) findViewById(R.id.lviRkList);
+            lv.setOnItemClickListener(new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
 
-            }
-        });
-        //new RkDetail().execute(new Object());
+                    RkListItem rkDetail = (RkListItem) parent.getItemAtPosition(position);
+                    Intent i = new Intent(RkList.this, RkListDetail.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("description", rkDetail.getDescription());
+                    i.putExtras(bundle);
+                    startActivity(i);
 
-        RkListItem rkListItem = new RkListItem();
-        rkListItem.setId(0);
-        rkListItem.setTitle("sunil");
-        rkListItem.setDescription("Sunil Desc");
-        RkList.add(rkListItem);
-        rkListAdapter = new RkListAdapter(RkList.this, RkList);
-        lv.setAdapter(rkListAdapter);
+                }
+            });
+            new RkDetail().execute(new Object());
 
-        // Look up the AdView as a resource and load a request.
-        AdView adView = (AdView) this.findViewById(R.id.adview);
-        adView.loadAd(new AdRequest());
+            /*RkListItem rkListItem = new RkListItem();
+            rkListItem.setId(0);
+            rkListItem.setTitle("Test 1");
+            rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
+            RkList.add(rkListItem);
+            rkListItem = new RkListItem();
+            rkListItem.setId(0);
+            rkListItem.setTitle("Test 2");
+            rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
+            RkList.add(rkListItem);
+            rkListItem = new RkListItem();
+            rkListItem.setId(0);
+            rkListItem.setTitle("Test 3");
+            rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
+            RkList.add(rkListItem);
+            rkListItem = new RkListItem();
+            rkListItem.setId(0);
+            rkListItem.setTitle("Test 4");
+            rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
+            RkList.add(rkListItem);
+            rkListAdapter = new RkListAdapter(RkList.this, RkList);
+            lv.setAdapter(rkListAdapter);*/
+
+            // Look up the AdView as a resource and load a request.
+            AdView adView = (AdView) this.findViewById(R.id.adview);
+            adView.loadAd(new AdRequest());
+        } else {
+            // Internet connection is not present
+            // Ask user to connect to Internet
+            showAlertDialog(RkList.this, "No Internet Connection",
+                    "You don't have internet connection.");
+        }
+
     }
 
     @Override
@@ -106,8 +142,10 @@ public class RkList extends Activity {
             try {
                 String envelop = String.format(SoapWebServiceInfo.RKLIST_ENVELOPE);
                 result = SoapWebServiceUtility.callWebService(envelop, SoapWebServiceInfo.RKLIST_SOAP_ACTION, SoapWebServiceInfo.RKLIST_RESULT_TAG);
-                JSONObject resJsonObj = new JSONObject(result);
-                RkList = convertJsonToList(resJsonObj);
+                //if(result != null){
+                    JSONObject resJsonObj = new JSONObject(result);
+                    RkList = convertJsonToList(resJsonObj);
+                //}
             } catch (Exception e) {
                 progressDialog.dismiss();
             }
@@ -126,4 +164,27 @@ public class RkList extends Activity {
         }
     }
 
+
+    public void showAlertDialog(Context context, String title, String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+
+        // Setting Dialog Title
+        alertDialog.setTitle(title);
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        // Setting alert dialog icon
+        alertDialog.setIcon(R.drawable.fail);
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
 }

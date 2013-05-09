@@ -4,29 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/light_black"
     >
-    
-	<RelativeLayout 
-    android:id="@+id/relativeLayout1" 
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" 
-    android:background="#007BC2" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/app_name"
-        android:textSize="10sp" />
-	</RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="fill_parent"
+            android:background="@drawable/background_header"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="@string/app_name"
+                android:textSize="20sp"/>
+    </RelativeLayout>
 		
-		<ListView
+	<ListView
         android:id="@+id/lviRkList"
+        android:layout_marginTop="3dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="1dp"
-        >
+        android:layout_below="@+id/relativeLayout1"
+        android:dividerHeight="1dp">
     </ListView>
     
 	<com.google.ads.AdView android:layout_width="fill_parent"

@@ -1,31 +1,24 @@
 package com.ruby.rkandro;
 
 
-import android.content.Intent;
+import android.app.Activity;
+import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
+import android.widget.TextView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.text.Html;
-import android.widget.TextView;
-import com.ruby.rkandro.service.AdPopupService;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class RkListDetail extends Activity {
 
-    public static final long NOTIFY_INTERVAL = 10 * 1000; // 10 seconds
+    public static final long NOTIFY_INTERVAL = 60 * 1000; // 10 seconds
 
     // run on another Thread to avoid crash
     private Handler mHandler = new Handler();
@@ -40,7 +33,8 @@ public class RkListDetail extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_rk_description);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_rk_description);
 		
 		Bundle extra = getIntent().getExtras();
 		
@@ -63,7 +57,7 @@ public class RkListDetail extends Activity {
             @Override
             public void onClick(View view) {
                 adsLayout.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), "Close ads", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Close ads", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -81,8 +75,7 @@ public class RkListDetail extends Activity {
     protected void onDestroy() {
         if (mTimer != null) {
             mTimer.cancel();
-            Toast.makeText(getApplicationContext(), "Stop timer",
-                    Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Stop timer",Toast.LENGTH_SHORT).show();
         }
         super.onDestroy();
     }
@@ -100,8 +93,7 @@ public class RkListDetail extends Activity {
                     if(adsLayout.getVisibility() == View.GONE){
                         adsLayout.setVisibility(View.VISIBLE);
                         // display toast
-                        Toast.makeText(getApplicationContext(), "Popup show",
-                                Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Popup show", Toast.LENGTH_SHORT).show();
                     }
                 }
 
