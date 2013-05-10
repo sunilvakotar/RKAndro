@@ -7,6 +7,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.Window;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.ruby.rkandro.pojo.RkListItem;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +20,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,7 +32,7 @@ import com.ruby.rkandro.soap.SoapWebServiceInfo;
 import com.ruby.rkandro.soap.SoapWebServiceUtility;
 
 
-public class RkList extends Activity {
+public class RkList extends SherlockActivity {
 
     private ListView lv;
     private ProgressDialog progressDialog;
@@ -43,7 +45,7 @@ public class RkList extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_rk_list);
 
         // creating connection detector class instance
@@ -67,9 +69,9 @@ public class RkList extends Activity {
 
                 }
             });
-            new RkDetail().execute(new Object());
+            //new RkDetail().execute(new Object());
 
-            /*RkListItem rkListItem = new RkListItem();
+            RkListItem rkListItem = new RkListItem();
             rkListItem.setId(0);
             rkListItem.setTitle("Test 1");
             rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
@@ -90,7 +92,7 @@ public class RkList extends Activity {
             rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
             RkList.add(rkListItem);
             rkListAdapter = new RkListAdapter(RkList.this, RkList);
-            lv.setAdapter(rkListAdapter);*/
+            lv.setAdapter(rkListAdapter);
 
             // Look up the AdView as a resource and load a request.
             AdView adView = (AdView) this.findViewById(R.id.adview);
@@ -106,7 +108,17 @@ public class RkList extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_rk_list, menu);
+        menu.add("refresh").setIcon(R.drawable.ic_refresh_inverse).
+                setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String title = (String) item.getTitle();
+        if (title.equalsIgnoreCase("refresh")) {
+            new RkDetail().execute(new Object());
+        }
         return true;
     }
 
@@ -117,12 +129,12 @@ public class RkList extends Activity {
         JSONArray detailArray;
         RkListItem rkListItem;
 
-        for (int i = 0; i < total; i++) {
+        for (int i = 1; i <= total; i++) {
             detailArray = (JSONArray) jsonObject.get("Record" + i);
             rkListItem = new RkListItem();
             rkListItem.setId((Integer) detailArray.get(0));
-            rkListItem.setTitle((String) detailArray.get(1));
-            rkListItem.setDescription((String) detailArray.get(2).toString());
+            rkListItem.setTitle(i + ". " + detailArray.get(1));
+            rkListItem.setDescription(detailArray.get(2).toString());
 
             details.add(rkListItem);
         }

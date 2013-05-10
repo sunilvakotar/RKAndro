@@ -6,7 +6,7 @@
     android:background="@color/light_black"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <!--<RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="fill_parent"
             android:background="@drawable/background_header"
@@ -22,8 +22,8 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:text="@string/app_name"
-                android:textSize="16sp"/>
-    </RelativeLayout>
+                android:textSize="20sp"/>
+    </RelativeLayout>-->
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/scrollView" android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/closeBtn" android:layout_alignRight="@+id/adviewpopup"
-                android:layout_alignTop="@+id/adviewpopup" android:src="@drawable/close" android:clickable="true"/>
+                android:layout_alignTop="@+id/adviewpopup" android:src="@drawable/close24" android:clickable="true"/>
     </RelativeLayout>
 
 </RelativeLayout>
