@@ -38,6 +38,7 @@ public class RkListDetail extends SherlockActivity {
 		super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_rk_description);
+        getSupportActionBar().setTitle(Html.fromHtml("<b><font color='#333333'>"+getString(R.string.app_name)+"</font></b>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle extra = getIntent().getExtras();

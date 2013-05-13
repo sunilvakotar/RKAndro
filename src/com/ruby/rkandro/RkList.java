@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Html;
 import android.view.Window;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -47,6 +48,7 @@ public class RkList extends SherlockActivity {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_rk_list);
+        getSupportActionBar().setTitle(Html.fromHtml("<b><font color='#333333'>"+getString(R.string.app_name)+"</font></b>"));
 
         // creating connection detector class instance
         cd = new ConnectionDetector(getApplicationContext());
@@ -129,11 +131,11 @@ public class RkList extends SherlockActivity {
         JSONArray detailArray;
         RkListItem rkListItem;
 
-        for (int i = 1; i <= total; i++) {
+        for (int i = 0; i < total; i++) {
             detailArray = (JSONArray) jsonObject.get("Record" + i);
             rkListItem = new RkListItem();
             rkListItem.setId((Integer) detailArray.get(0));
-            rkListItem.setTitle(i + ". " + detailArray.get(1));
+            rkListItem.setTitle((i+1) + ". " + detailArray.get(1));
             rkListItem.setDescription(detailArray.get(2).toString());
 
             details.add(rkListItem);
@@ -170,6 +172,7 @@ public class RkList extends SherlockActivity {
             if (RkList.size() > 0) {
                 rkListAdapter = new RkListAdapter(RkList.this, RkList);
                 lv.setAdapter(rkListAdapter);
+                rkListAdapter.notifyDataSetChanged();
             }
 
             progressDialog.dismiss();
