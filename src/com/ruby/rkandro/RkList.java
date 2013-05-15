@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Html;
-import android.view.Window;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -16,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -71,9 +69,9 @@ public class RkList extends SherlockActivity {
 
                 }
             });
-            //new RkDetail().execute(new Object());
+            new RkDetail().execute(new Object());
 
-            RkListItem rkListItem = new RkListItem();
+            /*RkListItem rkListItem = new RkListItem();
             rkListItem.setId(0);
             rkListItem.setTitle("Test 1");
             rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
@@ -94,7 +92,7 @@ public class RkList extends SherlockActivity {
             rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
             RkList.add(rkListItem);
             rkListAdapter = new RkListAdapter(RkList.this, RkList);
-            lv.setAdapter(rkListAdapter);
+            lv.setAdapter(rkListAdapter);*/
 
             // Look up the AdView as a resource and load a request.
             AdView adView = (AdView) this.findViewById(R.id.adview);
@@ -106,6 +104,11 @@ public class RkList extends SherlockActivity {
                     "You don't have internet connection.");
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
     }
 
     @Override
