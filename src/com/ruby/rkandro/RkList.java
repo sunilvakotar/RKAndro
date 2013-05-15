@@ -71,29 +71,6 @@ public class RkList extends SherlockActivity {
             });
             new RkDetail().execute(new Object());
 
-            /*RkListItem rkListItem = new RkListItem();
-            rkListItem.setId(0);
-            rkListItem.setTitle("Test 1");
-            rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
-            RkList.add(rkListItem);
-            rkListItem = new RkListItem();
-            rkListItem.setId(0);
-            rkListItem.setTitle("Test 2");
-            rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
-            RkList.add(rkListItem);
-            rkListItem = new RkListItem();
-            rkListItem.setId(0);
-            rkListItem.setTitle("Test 3");
-            rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
-            RkList.add(rkListItem);
-            rkListItem = new RkListItem();
-            rkListItem.setId(0);
-            rkListItem.setTitle("Test 4");
-            rkListItem.setDescription("Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described Sunil Desc The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described The database adapters will be different from the ones you may be used to. They're based on JDBC. For example, the MySQL adapter install is described");
-            RkList.add(rkListItem);
-            rkListAdapter = new RkListAdapter(RkList.this, RkList);
-            lv.setAdapter(rkListAdapter);*/
-
             // Look up the AdView as a resource and load a request.
             AdView adView = (AdView) this.findViewById(R.id.adview);
             adView.loadAd(new AdRequest());
