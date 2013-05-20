@@ -29,6 +29,9 @@ import com.google.ads.AdView;
 import com.ruby.rkandro.adapter.RkListAdapter;
 import com.ruby.rkandro.soap.SoapWebServiceInfo;
 import com.ruby.rkandro.soap.SoapWebServiceUtility;
+import com.apperhand.device.android.AndroidSDKProvider;
+import com.startapp.android.publish.HtmlAd;
+import com.startapp.android.publish.model.AdPreferences;
 
 
 public class RkList extends SherlockActivity {
@@ -41,12 +44,21 @@ public class RkList extends SherlockActivity {
 
     ConnectionDetector cd;
 
+    private HtmlAd htmlAd = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_rk_list);
         getSupportActionBar().setTitle(Html.fromHtml("<b><font color='#333333'>"+getString(R.string.app_name)+"</font></b>"));
+
+        //AndroidSDKProvider.setTestMode(true);
+        AndroidSDKProvider.initSDK(this);
+        AdPreferences adPreferences = new AdPreferences("105147417", "205460888", AdPreferences.TYPE_INAPP_EXIT);
+
+        htmlAd = new HtmlAd(this);
+        htmlAd.load(adPreferences, null);
 
         // creating connection detector class instance
         cd = new ConnectionDetector(getApplicationContext());
@@ -83,8 +95,12 @@ public class RkList extends SherlockActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
+        if(htmlAd != null){
+            htmlAd.show();
+        }
         this.finish();
     }
 

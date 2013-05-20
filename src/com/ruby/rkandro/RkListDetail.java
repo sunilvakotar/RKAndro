@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 public class RkListDetail extends SherlockActivity {
 
-    public static final long NOTIFY_INTERVAL = 60 * 1000; // 10 seconds
+    public static final long NOTIFY_INTERVAL = 180 * 1000; // 10 seconds
 
     // run on another Thread to avoid crash
     private Handler mHandler = new Handler();
@@ -50,8 +50,6 @@ public class RkListDetail extends SherlockActivity {
 		textDescription.setText(Html.fromHtml(description));
 		
 		 // Look up the AdView as a resource and load a request.
-        AdView adView = (AdView)this.findViewById(R.id.adview);
-        adView.loadAd(new AdRequest());
 
         AdView adViewPopup = (AdView)this.findViewById(R.id.adviewpopup);
         adViewPopup.loadAd(new AdRequest());
