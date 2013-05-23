@@ -21,8 +21,7 @@ import java.util.TimerTask;
 
 public class RkListDetail extends SherlockActivity {
 
-    public static final long NOTIFY_INTERVAL = 180 * 1000; // 10 seconds
-
+    public static final long NOTIFY_INTERVAL = 240 * 1000; // 10 seconds
     // run on another Thread to avoid crash
     private Handler mHandler = new Handler();
     // timer handling
@@ -36,7 +35,6 @@ public class RkListDetail extends SherlockActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_rk_description);
         getSupportActionBar().setTitle(Html.fromHtml("<b><font color='#333333'>"+getString(R.string.app_name)+"</font></b>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,7 +69,7 @@ public class RkListDetail extends SherlockActivity {
             mTimer = new Timer();
         }
         // schedule task
-        mTimer.scheduleAtFixedRate(new PopupDisplayTimerTask(), 0, NOTIFY_INTERVAL);
+        mTimer.scheduleAtFixedRate(new PopupDisplayTimerTask(), NOTIFY_INTERVAL, NOTIFY_INTERVAL);
     }
 
     @Override
