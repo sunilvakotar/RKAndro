@@ -75,7 +75,7 @@ public class RkList extends SherlockActivity {
                     RkListItem rkDetail = (RkListItem) parent.getItemAtPosition(position);
                     Intent i = new Intent(RkList.this, RkListDetail.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("description", rkDetail.getDescription());
+                    bundle.putString("ID", rkDetail.getId().toString());
                     i.putExtras(bundle);
                     startActivity(i);
 
@@ -132,7 +132,6 @@ public class RkList extends SherlockActivity {
             rkListItem = new RkListItem();
             rkListItem.setId((Integer) detailArray.get(0));
             rkListItem.setTitle((i+1) + ". " + detailArray.get(1));
-            rkListItem.setDescription(detailArray.get(2).toString());
 
             details.add(rkListItem);
         }
@@ -150,12 +149,12 @@ public class RkList extends SherlockActivity {
 
             String result = null;
             try {
-                String envelop = String.format(SoapWebServiceInfo.RKLIST_ENVELOPE);
-                result = SoapWebServiceUtility.callWebService(envelop, SoapWebServiceInfo.RKLIST_SOAP_ACTION, SoapWebServiceInfo.RKLIST_RESULT_TAG);
-                //if(result != null){
+                String envelop = String.format(SoapWebServiceInfo.GETLIST_ENVELOPE);
+                result = SoapWebServiceUtility.callWebService(envelop, SoapWebServiceInfo.GETLIST_SOAP_ACTION, SoapWebServiceInfo.GETLIST_RESULT_TAG);
+                if(result != null){
                     JSONObject resJsonObj = new JSONObject(result);
                     RkList = convertJsonToList(resJsonObj);
-                //}
+                }
             } catch (Exception e) {
                 progressDialog.dismiss();
             }

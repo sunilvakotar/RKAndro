@@ -2,7 +2,12 @@ package com.ruby.rkandro;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -15,7 +20,16 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+import com.ruby.rkandro.adapter.RkListAdapter;
+import com.ruby.rkandro.pojo.RkListItem;
+import com.ruby.rkandro.soap.SoapWebServiceInfo;
+import com.ruby.rkandro.soap.SoapWebServiceUtility;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,50 +40,88 @@ public class RkListDetail extends SherlockActivity {
     private Handler mHandler = new Handler();
     // timer handling
     private Timer mTimer = null;
+    private ProgressDialog progressDialog;
 
 	private String description;
+    private String id;
 	
 	TextView textDescription;
     ImageView closeButton;
     RelativeLayout adsLayout;
+
+    ConnectionDetector cd;
 	public void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rk_description);
         getSupportActionBar().setTitle(Html.fromHtml("<b><font color='#333333'>"+getString(R.string.app_name)+"</font></b>"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		Bundle extra = getIntent().getExtras();
-		
-		description = extra != null ? extra.getString("description") : " ";
-		
-		textDescription = (TextView) findViewById(R.id.TextDescription);
-		
-		textDescription.setText(Html.fromHtml(description));
-		
-		 // Look up the AdView as a resource and load a request.
 
-        AdView adViewPopup = (AdView)this.findViewById(R.id.adviewpopup);
-        adViewPopup.loadAd(new AdRequest());
+        // creating connection detector class instance
+        cd = new ConnectionDetector(getApplicationContext());
+        // get Internet status
+        boolean isInternetPresent = cd.isConnectingToInternet();
 
-        adsLayout = (RelativeLayout) findViewById(R.id.popupWithCross);
-        closeButton = (ImageView) findViewById(R.id.closeBtn);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adsLayout.setVisibility(View.GONE);
-                //Toast.makeText(getApplicationContext(), "Close ads", Toast.LENGTH_SHORT).show();
+        if (isInternetPresent) {
+
+            Bundle extra = getIntent().getExtras();
+
+            id = extra != null ? extra.getString("ID") : " ";
+
+            textDescription = (TextView) findViewById(R.id.TextDescription);
+            // Look up the AdView as a resource and load a request.
+            new RkDescription().execute(new Object());
+
+            AdView adViewPopup = (AdView) this.findViewById(R.id.adviewpopup);
+            adViewPopup.loadAd(new AdRequest());
+
+            adsLayout = (RelativeLayout) findViewById(R.id.popupWithCross);
+            closeButton = (ImageView) findViewById(R.id.closeBtn);
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    adsLayout.setVisibility(View.GONE);
+                    //Toast.makeText(getApplicationContext(), "Close ads", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            if (mTimer != null) {
+                mTimer.cancel();
+            } else {
+                // recreate new
+                mTimer = new Timer();
+            }
+            // schedule task
+            mTimer.scheduleAtFixedRate(new PopupDisplayTimerTask(), NOTIFY_INTERVAL, NOTIFY_INTERVAL);
+        } else {
+            // Internet connection is not present
+            // Ask user to connect to Internet
+            showAlertDialog(RkListDetail.this, "No Internet Connection",
+                    "You don't have internet connection.");
+        }
+    }
+
+    public void showAlertDialog(Context context, String title, String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+
+        // Setting Dialog Title
+        alertDialog.setTitle(title);
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        // Setting alert dialog icon
+        alertDialog.setIcon(R.drawable.fail);
+
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
             }
         });
 
-        if (mTimer != null) {
-            mTimer.cancel();
-        } else {
-            // recreate new
-            mTimer = new Timer();
-        }
-        // schedule task
-        mTimer.scheduleAtFixedRate(new PopupDisplayTimerTask(), NOTIFY_INTERVAL, NOTIFY_INTERVAL);
+        // Showing Alert Message
+        alertDialog.show();
     }
 
     @Override
@@ -109,4 +161,52 @@ public class RkListDetail extends SherlockActivity {
         }
 
     }
+
+    class RkDescription extends AsyncTask<Object, Void, String> {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(RkListDetail.this, "",
+                    "Loading....", true, false);
+        }
+
+        protected String doInBackground(Object... parametros) {
+
+            String result = null;
+            try {
+                String envelop = String.format(SoapWebServiceInfo.GETDETAIL_ENVELOPE, id);
+                result = SoapWebServiceUtility.callWebService(envelop, SoapWebServiceInfo.GETDETAIL_SOAP_ACTION, SoapWebServiceInfo.GETDETAIL_RESULT_TAG);
+                if(result != null){
+                    JSONObject resJsonObj = new JSONObject(result);
+                    description = convertJsonToString(resJsonObj);
+                }
+            } catch (Exception e) {
+                progressDialog.dismiss();
+            }
+
+            return result;
+        }
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (description != null) {
+                textDescription.setText(Html.fromHtml(description));
+            }
+
+            progressDialog.dismiss();
+        }
+    }
+
+    private String convertJsonToString(JSONObject jsonObject)
+            throws JSONException {
+        int total = (Integer) jsonObject.get("Total");
+        JSONArray detailArray;
+        RkListItem rkListItem;
+        String desc = "";
+        for (int i = 0; i < total; i++) {
+            detailArray = (JSONArray) jsonObject.get("Record" + i);
+            desc =  (String) detailArray.get(0);
+        }
+        return desc;
+    }
+
 }

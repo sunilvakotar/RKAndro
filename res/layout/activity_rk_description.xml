@@ -21,7 +21,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:textColor="@color/white"
-                    android:text="TextView"
                     android:textScaleX="1.2"
                     android:textSize="18sp"
                     android:textStyle="italic"/>
